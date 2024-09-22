@@ -98,9 +98,9 @@
         width: 770px;
         height: 120px;
         background-color: #772953; /* Placeholder color */
-          display: block;
-  margin-left: auto;
-  margin-right: auto;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
     }
     
     /* Main Content */
