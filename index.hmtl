@@ -1,1 +1,281 @@
+<html><head><base href="https://www.lycanthrolabs.com"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LycanthroLabs - Unleash Your Inner Beast</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+<style>
+    :root {
+        --primary-color: #181c1f;
+        --secondary-color: #f3f3f3;
+        --accent-color: #772953;
+        --text-color: #333;
+        --nav-color: #545c52;
+    }
+    
+    * {
+        margin: 0;
+        /*padding: 0;*/
+        box-sizing: border-box;
+    }
+    
+    body {
+        font-family: 'Inter', sans-serif;
+        background-color: var(--secondary-color);
+        color: var(--text-color);
+        line-height: 1.6;
+    }
+    
+    .container {
+        width: 90%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+    
+    /* Navigation */
+    nav {
+        background-color: var(--nav-color);
+        padding: 3px 0; /* Reduced padding to decrease height */
+    }
+    
+    .nav-container {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+    }
+    
+    .nav-menu {
+        display: flex;
+        list-style-type: none;
+    }
+    
+    .nav-item {
+        position: relative;
+        margin-left: 20px;
+    }
+    
+    .nav-link {
+        color: white;
+        text-decoration: none;
+        font-size: 1.0rem; /* Slightly reduced font size */
+        padding: 8px; /* Reduced padding */
+        display: block;
+    }
+    
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: var(--nav-color);
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+    }
+    
+    .dropdown-content a {
+        color: white;
+        padding: 10px 14px; /* Slightly reduced padding */
+        text-decoration: none;
+        display: block;
+        font-size: 0.9rem; /* Slightly reduced font size */
+    }
+    
+    .nav-item:hover .dropdown-content {
+        display: block;
+    }
+    
+    /* Banner */
+    .banner {
+        background-color: var(--primary-color);
+        padding: 10px 0;
+    }
+    
+    .banner-container {
+        display: flex;
+        align-items: center;
+    }
+    
+    .banner-logo {
+        width: 770px;
+        height: 120px;
+        background-color: #772953; /* Placeholder color */
+          display: block;
+  margin-left: auto;
+  margin-right: auto;
+    }
+    
+    /* Main Content */
+    main {
+        padding: 40px 0;
+    }
+    
+    h1, h2, h3 {
+        margin-bottom: 20px;
+    }
+    
+    p {
+        margin-bottom: 15px;
+    }
+    
+    /* Footer */
+    footer {
+        background-color: var(--primary-color);
+        color: white;
+        padding: 40px 0;
+    }
+    
+    .footer-container {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+    
+    .footer-column {
+        flex-basis: 30%;
+        margin-bottom: 20px;
+    }
+    
+    .footer-column h3 {
+        margin-bottom: 15px;
+    }
+    
+    .footer-column ul {
+        list-style-type: none;
+    }
+    
+    .footer-column ul li {
+        margin-bottom: 10px;
+    }
+    
+    .footer-column ul li a {
+        color: white;
+        text-decoration: none;
+    }
+    
+    /* Responsive Design */
+    @media screen and (max-width: 768px) {
+        .nav-menu {
+            flex-direction: column;
+            position: absolute;
+            top: 50px; /* Adjusted to match new nav height */
+            left: 0;
+            background-color: var(--nav-color);
+            width: 100%;
+            display: none;
+        }
+        
+        .nav-item {
+            margin: 8px 0; /* Slightly reduced margin */
+        }
+        
+        .nav-item:hover .dropdown-content {
+            position: static;
+        }
+        
+        .banner-logo {
+            width: 100%;
+            height: auto;
+        }
+        
+        .footer-column {
+            flex-basis: 100%;
+        }
+    }
+</style>
+</head>
+<body>
+
+	 <div class="banner">
+        <div class="container banner-container">
+            <div class="banner-logo">
+                <!-- Replace with actual logo -->
+                <img src="images/lycoSmall.png" width="770" height="120" alt="LycanthroLabs Logo">
+            </div>
+        </div>
+    </div>
+
+    <nav>
+        <div class="container nav-container">
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#" class="nav-link">Products</a>
+                    <div class="dropdown-content">
+                        <a href="/products/transformation">Transformation Kits</a>
+                        <a href="/products/elixirs">Lunar Elixirs</a>
+                        <a href="/products/accessories">Lycanthrope Accessories</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">Services</a>
+                    <div class="dropdown-content">
+                        <a href="/services/consultation">Transformation Consultation</a>
+                        <a href="/services/training">Pack Integration Training</a>
+                        <a href="/services/support">Post-Transformation Support</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">Resources</a>
+                    <div class="dropdown-content">
+                        <a href="/resources/faq">FAQ</a>
+                        <a href="/resources/blog">Lycanthropy Blog</a>
+                        <a href="/resources/community">Werewolf Community</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <div class="container">
+            <h1>Welcome to LycanthroLabs</h1>
+            <p>Unleash your inner beast with our cutting-edge lycanthropic technologies. At LycanthroLabs, we're revolutionizing the way humans connect with their primal instincts.</p>
+            
+            <h2>Our Mission</h2>
+            <p>To provide safe, ethical, and transformative lycanthropic experiences that empower individuals to explore their full potential, both human and wolf.</p>
+            
+            <h2>Featured Products</h2>
+            <ul>
+                <li>LunarSync™ Transformation Serum</li>
+                <li>WolfPack Integration Guide</li>
+                <li>Full Moon Meditation App</li>
+            </ul>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container footer-container">
+            <div class="footer-column">
+                <h3>About Us</h3>
+                <ul>
+                    <li><a href="/about/story">Our Story</a></li>
+                    <li><a href="/about/team">Meet the Pack</a></li>
+                    <li><a href="/about/ethics">Ethical Standards</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="/support/contact">Contact Us</a></li>
+                    <li><a href="/support/faq">FAQ</a></li>
+                    <li><a href="/support/shipping">Shipping Information</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Legal</h3>
+                <ul>
+                    <li><a href="/legal/terms">Terms of Service</a></li>
+                    <li><a href="/legal/privacy">Privacy Policy</a></li>
+                    <li><a href="/legal/disclaimer">Lycanthropic Disclaimer</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Add any JavaScript functionality here
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('LycanthroLabs website loaded successfully!');
+        });
+    </script>
+</body>
+</html>
 
