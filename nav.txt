@@ -4,9 +4,10 @@
                 <li class="nav-item">
                     <a href="#" class="nav-link">Communication</a>
                     <div class="dropdown-content">
-                        <a href="#">One</a>
-			<a href="#">Two</a>
-			<a href="#">Three</a>
+                        <a href="#">Radio</a>
+			<a href="#">MANET/HaMPER</a>
+			<a href="#">Reticulum</a>
+			<a href="#">Meshtastic</a>
                     </div>
                 </li>
                 <li class="nav-item">
