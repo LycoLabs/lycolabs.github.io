@@ -6,13 +6,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
 <script src="jquery.js"></script> 
 <script> 
-$(function () {
-  var includes = $('[data-include]')
-  $.each(includes, function () {
-    var file = './views/' + $(this).data('include') + '.html'
-    $(this).load(file)
-  })
-})
+    $(function(){
+      $("#includedContent").load("nav.html"); 
+    });
 </script> 
 <style>
     :root {
