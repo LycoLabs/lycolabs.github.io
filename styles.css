@@ -13,7 +13,7 @@ body {
 
 aside {
     width: 240px;
-    background-color: #3b3e3f;
+    background-color: #181c1f;
     position: fixed;
     top: 0; /* Ensures it starts at the top */
     bottom: 0; /* Ensures it stretches to the bottom */
@@ -73,9 +73,10 @@ h1, h2 {
 
 footer {
     padding: 10px;
-    background-color: #3b3e3f;
+    background-color: #181c1f;
     text-align: center;
     font-size: 14px;
+    color: #BFBFBF;
 }
 
 footer a {
