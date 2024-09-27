@@ -13,7 +13,7 @@ body {
 
 aside {
     width: 240px;
-    background-color: #D7D7D7;
+    background-color: #3b3e3f;
     position: fixed;
     top: 0; /* Ensures it starts at the top */
     bottom: 0; /* Ensures it stretches to the bottom */
@@ -27,6 +27,7 @@ aside {
 .banner {
     font-weight: 200;
     font-size: 24px;
+    color: #f3f3f3;
     text-align: center;
     padding-bottom: 25px;
 }
@@ -43,11 +44,12 @@ aside nav ul li {
 
 aside nav ul li a {
     text-decoration: none;
-    color: #333;
+    color: #BFBFBF;
 }
 
 aside nav ul li a:hover {
     text-decoration: underline;
+    color: #f3f3f3;
 }
 
 main {
@@ -65,7 +67,7 @@ p {
 h1, h2 {
     margin: 0;
     padding: 10px 0;
-    color: maroon;
+    color: #162416;
 }
 
 
