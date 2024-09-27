@@ -61,7 +61,14 @@ aside {
     font-size: 24px;
     color: #f3f3f3;
     text-align: center;
-    padding-bottom: 25px;
+}
+
+.banner_small {
+    font-weight: 200;
+    font-size: 12px;
+    color: #f3f3f3;
+    text-align: center;
+    padding-bottom: 14px;
 }
 
 aside nav ul {
