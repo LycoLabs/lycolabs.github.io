@@ -67,23 +67,23 @@ p {
 h1, h2 {
     margin: 0;
     padding: 10px 0;
-    color: #162416;
+    color: maroon;
 }
 
 
 footer {
     padding: 10px;
-    background-color: #ddd;
+    background-color: #3b3e3f;
     text-align: center;
     font-size: 14px;
 }
 
 footer a {
-    background-color: #ddd;
     text-decoration: none;
-    color: #333;
+    color: #BFBFBF;
 }
 
 footer a:hover {
-    background-color: #fff;
+    text-decoration: underline;
+    color: #f3f3f3;
 }
