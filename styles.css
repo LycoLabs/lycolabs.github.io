@@ -72,6 +72,11 @@ aside {
     padding-bottom: 14px;
 }
 
+.menu_bar {
+    width: 80%;
+    padding-bottom: 14px;
+}
+
 aside nav ul {
     list-style-type: none;
     padding: 0;

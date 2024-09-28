@@ -1,299 +1,36 @@
-<html><head><base href="https://www.lycanthrolabs.com"/>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LycanthroLabs: About</title>
-<link rel="icon" type="image/png" href="./images/lycoicon.png">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
-<style>
-    :root {
-        --primary-color: #181c1f;
-        --secondary-color: #f3f3f3;
-        --accent-color: #772953;
-        --text-color: #333;
-        --nav-color: #545c52;
-    }
-    
-    * {
-        margin: 0;
-        /*padding: 0;*/
-        box-sizing: border-box;
-    }
-    
-    body {
-        font-family: 'Inter', sans-serif;
-        background-color: var(--secondary-color);
-        color: var(--text-color);
-        line-height: 1.6;
-    }
-    
-    .container {
-        width: 90%;
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 20px;
-    }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LycanthroLabs: About</title>
+    <link rel="icon" type="image/png" href="./images/teeth.png" />
+    <link rel="stylesheet" href="styles.css">
 
-    .main-container a {
-        color: var(--nav-color);
-	text-decoration: none;
-	font-weight: bold;
-	text-decoration: none;
-    }
-
-    .main-container a:hover {
-        color: var(--nav-color);
-	text-decoration: none;
-	font-weight: bold;
-	text-decoration: underline;
-    }
-    
-    /* Navigation */
-    nav {
-        background-color: var(--nav-color);
-        padding: 3px 0; /* Reduced padding to decrease height */
-    }
-    
-    .nav-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    
-    .nav-menu {
-        display: flex;
-        list-style-type: none;
-    }
-    
-    .nav-item {
-        position: relative;
-        margin-left: 20px;
-    }
-    
-    .nav-link {
-        color: white;
-        text-decoration: none;
-        font-size: 1.0rem; /* Slightly reduced font size */
-        padding: 8px; /* Reduced padding */
-        display: block;
-    }
-    
-    .dropdown-content {
-        display: none;
-        position: absolute;
-        background-color: var(--nav-color);
-        min-width: 160px;
-        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-        z-index: 1;
-    }
-    
-    .dropdown-content a {
-        color: white;
-        padding: 10px 14px; /* Slightly reduced padding */
-        text-decoration: none;
-        display: block;
-        font-size: 0.9rem; /* Slightly reduced font size */
-    }
-    
-    .nav-item:hover .dropdown-content {
-        display: block;
-    }
-    
-    /* Banner */
-    .banner {
-        background-color: var(--primary-color);
-        padding: 10px 0;
-    }
-    
-    .banner-container {
-        display: flex;
-        align-items: center;
-    }
-    
-    .banner-logo {
-        width: 770px;
-        height: 120px;
-        background-color: #181c1f; /* Placeholder color */
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-    }
-    
-    /* Main Content */
-    main {
-        padding: 40px 0;
-    }
-    
-    h1, h2, h3 {
-        margin-bottom: 20px;
-	color: var(--nav-color);
-    }
-    
-    p {
-        margin-bottom: 15px;
-    }
-    
-    /* Footer */
-    footer {
-        background-color: var(--primary-color);
-        color: white;
-        padding: 40px 0;
-    }
-    
-    .footer-container {
-        display: flex;
-        justify-content: space-between;
-        flex-wrap: wrap;
-    }
-    
-    .footer-column {
-        flex-basis: 30%;
-        margin-bottom: 20px;
-    }
-    
-    .footer-column h3 {
-        margin-bottom: 15px;
-    }
-    
-    .footer-column ul {
-        list-style-type: none;
-    }
-    
-    .footer-column ul li {
-        margin-bottom: 10px;
-    }
-    
-    .footer-column a {
-        color: white;
-        text-decoration: none;
-    }
-    
-    /* Responsive Design */
-    @media screen and (max-width: 768px) {
-        .nav-menu {
-            flex-direction: column;
-            position: absolute;
-            top: 50px; /* Adjusted to match new nav height */
-            left: 0;
-            background-color: var(--nav-color);
-            width: 100%;
-            display: none;
-        }
-        
-        .nav-item {
-            margin: 8px 0; /* Slightly reduced margin */
-        }
-        
-        .nav-item:hover .dropdown-content {
-            position: static;
-        }
-        
-        .banner-logo {
-            width: 100%;
-            height: auto;
-        }
-        
-        .footer-column {
-            flex-basis: 100%;
-        }
-    }
-</style>
 </head>
 <body>
-
-	 <div class="banner">
-        <div class="container banner-container">
-            <div class="banner-logo">
-            	<a href="index.html" >
-                <img src="images/lycoSmall.png" width="770" height="120" alt="LycanthroLabs Logo">
-               </a>
-            </div>
-        </div>
-    </div>
-
-    <nav>
-        <div class="container nav-container">
-            <ul class="nav-menu">
-                <li class="nav-item">
-                    <a href="#" class="nav-link">Communication</a>
-                    <div class="dropdown-content">
-                        <a href="#">One</a>
-			<a href="#">Two</a>
-			<a href="#">Three</a>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">Computers</a>
-                    <div class="dropdown-content">
-                        <a href="#">One</a>
-						<a href="#">Two</a>
-						<a href="#">Three</a>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">Cryptography</a>
-                    <div class="dropdown-content">
-                        <a href="#">One</a>
-						<a href="#">Two</a>
-						<a href="#">Three</a>
-                    </div>
-                </li>
-		<li class="nav-item">
-                    <a href="#" class="nav-link">Coversion</a>
-                    <div class="dropdown-content">
-                        <a href="#">One</a>
-						<a href="#">Two</a>
-						<a href="#">Three</a>
-                    </div>
-                </li>
-	        <li class="nav-item">
-                    <a href="#" class="nav-link">Codicil</a>
-                    <div class="dropdown-content">
-                        <a href="about.html">About</a>
-						<a href="#">Contact</a>
-						<a href="#">Resources</a>
-                    </div>
-                </li>
+    <aside>
+        <nav>
+        <a href="index.html"</a>
+            <img src="images/TopLogo.png" width="220" height="240" alt="">
+        </a>
+        <div class="banner">About LycoLabs</div>
+        <hr class="menu_bar">
+        <div class="banner_small">On This Page</div>
+            <ul>
+                <li><a href="#">In Progress</a></li>
             </ul>
-        </div>
-    </nav>
-
-
+        </nav>
+        <footer>
+			<a href="https://www.youtube.com/@LycanthroLabs">YouTube</a> | <a href="https://github.com/LycoLabs">GitHub</a><br />
+            <a href="contact.html">Contact</a> | <a href="about_dmr.html">About</a> | <a href="legal.html">Legal</a>
+            <p>Copyright 2024<br>LycanthroLabs</p>
+        </footer>
+    </aside>
     <main>
-        <div class="container main-container">
-            <h1>About LycanthroLabs</h1>
-            <p>Lorem ipsum odor amet, <a href="#">Testing </a>consectetuer adipiscing elit. Nam cras sodales dis vulputate, duis sit lorem. Dui accumsan suscipit parturient id; quis elementum. Magnis ligula arcu ultricies aptent proin torquent aenean. Quam enim suspendisse odio erat facilisi. Nostra massa inceptos condimentum amet conubia malesuada. Eleifend duis mauris malesuada, proin interdum vel libero ligula. Hac torquent pretium faucibus elementum varius commodo. Eleifend a nisl platea purus cursus interdum.</p>
-
-<p>Dis porta habitant sem iaculis pharetra. Vulputate semper molestie amet ex luctus phasellus. Fames quam nam dignissim rhoncus amet fringilla imperdiet phasellus senectus. Diam finibus parturient natoque integer purus vel sem hac. Amet efficitur ad rhoncus consequat aliquam, vulputate erat adipiscing. Fermentum elementum elementum curae praesent justo mauris netus.</p>
-
-<p>Habitant duis nostra litora quisque varius lacinia. Dis ac congue sociosqu mattis eros sodales ante. Lectus dignissim dui eros dignissim ad tempus ligula dui. Egestas hendrerit ex metus tortor ante blandit arcu. Magna per primis volutpat commodo dapibus fusce ex risus. Ad nisi placerat semper pretium magnis nostra parturient quam. Id accumsan ad massa sem luctus netus interdum curabitur..</p>
-            
-            <h2>Our Mission</h2>
-            <p>Habitant duis nostra litora quisque varius lacinia. Dis ac congue sociosqu mattis eros sodales ante. Lectus dignissim dui eros dignissim ad tempus ligula dui. Egestas hendrerit ex metus tortor ante blandit arcu. Magna per primis volutpat commodo dapibus fusce ex risus. Ad nisi placerat semper pretium magnis nostra parturient quam.</p>
-        </div>
+        <h2>Welcome to LycanthroLabs</h2>
+        <p>This is your main content area. You can add your documentation content here.</p>
+        <pre><code class="language-css"> /* Your CSS code here */ </code></pre>
     </main>
-
-    <footer>
-        <div class="container footer-container">
-            <div class="footer-column">
-                <img src="images/teeth.png" width="200" height="200" alt="LycanthroLabs Logo">
-            </div>
-            <div class="footer-column">
-                <h3>Support</h3>
-                <a href="/about/story">Our Story</a>
-            </div>
-            <div class="footer-column">
-		<h3>About Us</h3>
-                <a href="/about/story">Our Story</a>
-                </div>
-        </div>
-    </footer>
-
-    <script>
-        // Add any JavaScript functionality here
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('LycanthroLabs website loaded successfully!');
-        });
-    </script>
 </body>
 </html>
-
