@@ -65,16 +65,29 @@ aside {
 
 .banner_small {
     font-weight: 200;
-    font-size: 14px;
+    font-size: 16px;
     color: #f3f3f3;
     text-align: center;
     padding-top: 10px;
-    padding-bottom: 14px;
+    padding-bottom: 20px;
 }
 
 hr {
-    width: 80%;
-    padding-bottom: 14px;
+  border: none;
+  border-top: 3px double #f3f3f3;
+  overflow: visible;
+  text-align: center;
+  height: 5px;
+  width: 80%;
+}
+
+hr::after {
+  background: #181c1f;
+  color: #f3f3f3;
+  content: 'Menu';
+  padding: 0 4px;
+  position: relative;
+  top: -13px;
 }
 
 aside nav ul {
