@@ -65,9 +65,10 @@ aside {
 
 .banner_small {
     font-weight: 200;
-    font-size: 18px;
+    font-size: 14px;
     color: #f3f3f3;
     text-align: center;
+    padding-top: 10px;
     padding-bottom: 14px;
 }
 
@@ -94,7 +95,7 @@ aside nav ul li a:hover {
 main {
     margin-left: 260px; /* Width of the aside */
     padding: 40px 20px 20px; /* Top padding to avoid header overlap */
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 400;
 }
 
