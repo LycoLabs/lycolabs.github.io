@@ -37,9 +37,9 @@
 <script>
   document.addEventListener("DOMContentLoaded", function() {
     document.querySelectorAll('code').forEach(function(block) {
-      block.innerHTML = block.textContent
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;');
+      block.textContent = block.textContent
+        .replace(/</g, '<')
+        .replace(/>/g, '>');
     });
   });
 </script>    
