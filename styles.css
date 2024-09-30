@@ -35,13 +35,17 @@ body {
     padding: 0 20px;
 }
 
-.language-css {
+code {
   background-color: #f0f0f0; /* light gray background */
   border: 1px solid #ccc; /* thin border */
   padding: 10px; /* add some padding */
-  font-family: 'Fira Code'; /* use a monospace font */
+  font-family: 'Fira Code', monospace; /* use a monospace font */
   font-size: 16px; /* set font size */
+  line-height: 1.5; /* adjust line height */
+  white-space: pre-wrap; /* ensure code wraps properly */
+  display: block; /* ensure the code block takes up full width */
 }
+
 
 aside {
     width: 240px;
@@ -113,6 +117,7 @@ aside nav ul li a:hover {
 main {
     margin-left: 260px; /* Width of the aside */
     padding: 40px 20px 20px; /* Top padding to avoid header overlap */
+    max-width: 1600px;
     font-size: 18px;
     font-weight: 400;
 }
@@ -146,3 +151,4 @@ footer a:hover {
     text-decoration: underline;
     color: #f3f3f3;
 }
+
