@@ -31,10 +31,17 @@
         <h2>Welcome to LycanthroLabs</h2>
         <p>This is your main content area. You can add your documentation content here. here Your CSS code here Your CSS code here Your CSS code here Your CSS code here Your CSS code here Your CSS code here Your CSS code here Your CSS code here Your CSS code here Your CSS code here Your CSS code here Your CSS code here Your CSS code here Your CSS code here Your CSS code here Your CSS code here Your CSS code here Your CSS code here Your CSS code here Your CSS code here Your CSS code here Your CSS code here Your CSS code here Your CSS code here Your CSS code here Your CSS code here Your CSS code here Your CSS code here Your CSS code here Your CSS code here Your CSS code here Your CSS code here Your CSS code here Your CSS code here Your CSS code here Your CSS code here Your CSS code here Your CSS code here Your CSS code here Your CSS code here Your CSS code here Your CSS code here Your CSS code here Your CSS code here Your CSS code here Your CSS code here Your CSS code here Your CSS code here Your CSS code here Your CSS code here Your CSS code here Your CSS code here Your CSS code here Your CSS code here Your CSS code here Your CSS code here Your CSS code here Your CSS code here Your CSS code here Your CSS </p>
         <p><code>llllllllllllllll
-          <?php
+          <?php kkkkkkkkkkkkkkkkkkk
 ?></code></p>
     </main>
-<script src="fixTags.js">
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    document.querySelectorAll('code').forEach(function(block) {
+      block.innerHTML = block.textContent
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+    });
+  });
 </script>    
 </body>
 </html>
