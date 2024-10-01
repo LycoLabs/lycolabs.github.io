@@ -44,8 +44,8 @@ code {
   line-height: 1.5; /* adjust line height */
   white-space: pre-wrap; /* ensure code wraps properly */
   display: block; /* ensure the code block takes up full width */
+  font-variant-ligatures: none; /* disable ligatures */
 }
-
 
 aside {
     width: 240px;
