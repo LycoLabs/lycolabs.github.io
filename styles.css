@@ -103,13 +103,13 @@ hr::after {
 
 aside nav ul {
     list-style-type: none;
+    color: #BFBFBF;
     padding: 0;
     margin: 0;
 }
 
 aside nav ul li {
     padding: 5px 24px;
-    color: #BFBFBF;
 }
 
 aside nav ul li a {
