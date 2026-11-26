@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dark Mountain Research</title>
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+    
+    <style>
+        :root {
+            /* Theme Variables */
+            --bg-body: #121212;
+            --bg-app: #1e1e1e;
+            --bg-panel: #252525;
+            --border-color: #333333;
+            --text-main: #d4d4d4;
+            --text-dim: #888888;
+            --accent: #3a3a3a;
+            --accent-hover: #505050;
+            --header-height: 50px;
+            --sidebar-width: 280px;
+            --max-width: 1440px;
+            --font-size-base: 16px;
+        }
+
+        body.light-mode {
+            --bg-body: #e0e0e0;
+            --bg-app: #f5f5f5;
+            --bg-panel: #e8e8e8;
+            --border-color: #ccc;
+            --text-main: #222;
+            --text-dim: #666;
+            --accent: #d0d0d0;
+            --accent-hover: #bfbfbf;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body { 
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; 
+            background: var(--bg-body); 
+            color: var(--text-main);
+            height: 100vh;
+            display: flex; justify-content: center; overflow: hidden;
+            font-size: var(--font-size-base);
+        }
+
+        #app-container {
+            width: 100%; max-width: var(--max-width);
+            background: var(--bg-app);
+            display: flex; flex-direction: column;
+            position: relative;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        }
+
+        /* --- Header --- */
+        #top-bar {
+            height: var(--header-height);
+            background: var(--bg-panel);
+            border-bottom: 1px solid var(--border-color);
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 15px; flex-shrink: 0; z-index: 200;
+        }
+
+        .header-left { 
+            display: flex; align-items: center; 
+            height: 100%; flex: 1; overflow: hidden; 
+        }
+
+        .hamburger {
+            background: none; border: none; color: var(--text-main);
+            cursor: pointer; margin-right: 15px;
+            display: flex; align-items: center; justify-content: center;
+            padding: 5px;
+        }
+        .hamburger:hover { color: #fff; }
+        .hamburger svg { width: 32px; height: 32px; fill: currentColor; }
+
+        .app-title {
+            font-weight: 600; font-size: 1rem; margin-left: 15px;
+            white-space: nowrap; color: var(--text-main);
+        }
+
+        /* --- Tabs --- */
+        #tabs-container {
+            display: flex; gap: 2px; height: 100%; align-items: flex-end;
+            overflow-x: auto; scrollbar-width: none;
+            padding-bottom: 0; margin-left: 10px;
+        }
+        #tabs-container::-webkit-scrollbar { display: none; }
+
+        .tab {
+            padding: 0 15px; height: 34px;
+            background: var(--bg-panel);
+            border: 1px solid var(--border-color);
+            border-bottom: none; border-radius: 6px 6px 0 0;
+            font-size: 0.85rem; cursor: pointer;
+            display: flex; align-items: center; gap: 8px;
+            color: var(--text-dim); margin-bottom: -1px;
+            user-select: none; white-space: nowrap; max-width: 200px;
+        }
+        .tab:hover { background: var(--accent); }
+        .tab.active { 
+            background: var(--bg-app); color: var(--text-main); height: 35px; 
+            border-bottom: 1px solid var(--bg-app); z-index: 10;
+        }
+        .tab .close-btn {
+            font-size: 14px; width: 16px; height: 16px;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 50%; opacity: 0.6;
+        }
+        .tab .close-btn:hover { background: var(--accent-hover); opacity: 1; }
+
+        /* --- Workspace --- */
+        #workspace { flex: 1; display: flex; overflow: hidden; position: relative; }
+
+        /* --- Sidebar --- */
+        #sidebar {
+            width: var(--sidebar-width);
+            background: var(--bg-panel);
+            border-right: 1px solid var(--border-color);
+            display: flex; flex-direction: column;
+            transition: margin-left 0.3s ease; flex-shrink: 0; padding-top: 15px;
+        }
+        #sidebar.closed { margin-left: calc(var(--sidebar-width) * -1); }
+
+        /* Sidebar Icons */
+        .nav-icons { 
+            display: flex; justify-content: center; gap: 12px; 
+            margin-bottom: 20px; padding: 0 10px; flex-shrink: 0;
+        }
+        .icon-btn {
+            width: 48px; height: 48px;
+            border-radius: 8px;
+            background: var(--accent);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            transition: all 0.2s;
+        }
+        .icon-btn svg { width: 24px; height: 24px; fill: currentColor; }
+        .icon-btn:hover, .icon-btn.active-tool { 
+            background: var(--accent-hover); 
+            border-color: var(--text-dim);
+        }
+
+        /* Sidebar Panels */
+        .sidebar-panel { display: none; flex: 1; overflow-y: auto; padding: 10px 20px; }
+        .sidebar-panel.active { display: block; }
+
+        /* Tree Items */
+        details { margin-bottom: 5px; }
+        summary { cursor: pointer; color: var(--text-dim); list-style: none; font-weight: 500; }
+        summary:hover { color: var(--text-main); }
+        .tree-item { 
+            padding: 4px 0 4px 12px; border-left: 1px solid var(--border-color); margin-left: 5px;
+            color: var(--text-dim); cursor: pointer; font-size: 0.9rem;
+        }
+        .tree-item:hover { color: var(--text-main); text-decoration: underline; }
+
+        /* Sidebar Footer (Tightened Spacing) */
+        .sidebar-footer {
+            margin-top: auto; padding: 15px 20px;
+            border-top: 1px solid var(--border-color);
+            text-align: center; font-size: 0.8rem;
+            color: var(--text-dim); line-height: 1.4; /* Tighter lines */
+        }
+        .sidebar-footer a { color: var(--text-dim); text-decoration: none; transition: color 0.2s; }
+        .sidebar-footer a:hover { color: var(--text-main); text-decoration: underline; }
+        .sidebar-footer p { margin-top: 5px; font-size: 0.75rem; opacity: 0.7; margin-bottom: 0; }
+
+        /* ToC Links */
+        .toc-link { 
+            display: block; padding: 5px 0; color: var(--text-dim); 
+            text-decoration: none; font-size: 0.9rem; cursor: pointer;
+        }
+        .toc-link:hover { color: var(--text-main); }
+        .toc-h1 { font-weight: bold; }
+        .toc-h2 { padding-left: 15px; }
+
+        /* Settings & Search Panel */
+        .setting-row { margin-bottom: 20px; }
+        .setting-row label { display: block; margin-bottom: 8px; color: var(--text-main); font-weight: 500;}
+        .btn-toggle {
+            padding: 8px 12px; background: var(--accent); border: 1px solid var(--border-color);
+            color: var(--text-main); cursor: pointer; border-radius: 4px; width: 100%;
+        }
+        .btn-toggle:hover { background: var(--accent-hover); }
+
+        #search-input {
+            width: 100%; padding: 8px; border-radius: 4px; border: 1px solid var(--border-color);
+            background: #111; color: var(--text-main); margin-bottom: 8px;
+        }
+
+        /* --- Main Content (Content Typography) --- */
+        #main-content {
+            flex: 1; overflow-y: auto; padding: 40px 60px;
+            background: var(--bg-app); position: relative;
+        }
+        
+        /* Spacing adjustments for readable content */
+        #page-content { line-height: 1.7; }
+        
+        /* Section Spacing (from your NotebookLM HTML) */
+        #page-content section { margin-bottom: 40px; }
+
+        /* Header Sizes & Spacing */
+        #page-content h1 { 
+            font-size: 1.7rem; /* Reduced from 2.0 */
+            margin-top: 0; margin-bottom: 20px; 
+            color: #fff; line-height: 1.2;
+        }
+        #page-content h2 { 
+            font-size: 1.4rem; /* Reduced from 1.5 */
+            margin-top: 30px; margin-bottom: 15px; 
+            color: #eee; border-bottom: 1px solid #333; padding-bottom: 5px;
+        }
+
+        /* List & Paragraph Spacing */
+        #page-content p { margin-bottom: 15px; }
+        #page-content ul, #page-content ol { margin-bottom: 20px; padding-left: 25px; }
+        #page-content li { margin-bottom: 10px; /* Air between list items */ }
+        
+        /* Search Result Styling */
+        .search-result { margin-bottom: 15px; border-bottom: 1px solid #333; padding-bottom: 10px; }
+        .search-result a { color: #8ab4f8; text-decoration: none; font-size: 1.1rem; font-weight: bold; }
+        .search-result a:hover { text-decoration: underline; }
+        .search-snippet { color: #aaa; font-size: 0.9rem; margin-top: 5px; }
+
+        /* Empty State */
+        .empty-state {
+            display: none; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            display: flex; align-items: center; justify-content: center;
+            pointer-events: none; opacity: 0.1;
+        }
+        .empty-state img { max-width: 400px; max-height: 400px; }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            #sidebar {
+                position: absolute; top: 0; bottom: 0; left: 0; z-index: 100;
+                width: 85%; transform: translateX(-100%); margin-left: 0;
+                box-shadow: 10px 0 20px rgba(0,0,0,0.5);
+            }
+            #sidebar.open-mobile { transform: translateX(0); }
+            #overlay {
+                display: none; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+                background: rgba(0,0,0,0.5); z-index: 90;
+            }
+            #overlay.active { display: block; }
+            #main-content { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="app-container">
+        
+        <header id="top-bar">
+            <div class="header-left">
+                <button class="hamburger" onclick="toggleSidebar()">
+                    <svg viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+                </button>
+                <div id="tabs-container"></div>
+                </div>
+            <div class="app-title">Dark Mountain Research</div>
+        </header>
+
+        <div id="workspace">
+            <aside id="sidebar">
+                <div class="nav-icons">
+                    <button class="icon-btn active-tool" onclick="switchPanel('nav')" title="Site Navigation">
+                        <svg viewBox="0 0 24 24"><path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/></svg>
+                    </button>
+                    <button class="icon-btn" onclick="switchPanel('toc')" title="Page Contents">
+                        <svg viewBox="0 0 24 24"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/></svg>
+                    </button>
+                    <button class="icon-btn" onclick="openPage('Home', 'pages/home.html')" title="Go Home">
+                        <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                    </button>
+                    <button class="icon-btn" onclick="switchPanel('settings')" title="Settings & Search">
+                        <svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.04.24.24.41.48.41h3.84c.24 0 .43-.17.47-.41l.36-2.54c.59-.24 1.13-.57 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+                    </button>
+                </div>
+
+                <div id="panel-nav" class="sidebar-panel active">
+                    <details open>
+                        <summary>▾ General</summary>
+                        <div class="tree-item" onclick="openPage('Mission', 'pages/mission.html')">Mission Statement</div>
+                        <div class="tree-item" onclick="openPage('Contact', 'pages/contact.html')">Contact DMR</div>
+                    </details>
+                    <details open style="margin-top:10px;">
+                        <summary>▾ Research Logs</summary>
+                        <div class="tree-item" onclick="openPage('Log 001', 'pages/log001.html')">Log Entry 001</div>
+                        <div class="tree-item" onclick="openPage('Log 002', 'pages/log002.html')">Log Entry 002</div>
+                    </details>
+                </div>
+
+                <div id="panel-toc" class="sidebar-panel">
+                    <p style="font-size:0.8rem; color:var(--text-dim); margin-bottom:10px;">CONTENTS OF CURRENT PAGE</p>
+                    <div id="toc-list"></div>
+                </div>
+
+                <div id="panel-settings" class="sidebar-panel">
+                    
+                    <div class="setting-row">
+                        <label>Site Search</label>
+                        <input type="text" id="search-input" placeholder="Search keywords...">
+                        <button class="btn-toggle" onclick="performSearch()">Search</button>
+                    </div>
+
+                    <hr style="border:0; border-top:1px solid var(--border-color); margin: 20px 0;">
+
+                    <div class="setting-row">
+                        <label>Display Mode</label>
+                        <button class="btn-toggle" onclick="toggleTheme()">Toggle Light/Dark</button>
+                    </div>
+                    <div class="setting-row">
+                        <label>Font Size</label>
+                        <button class="btn-toggle" onclick="adjustFont(1)">Increase (+)</button>
+                        <div style="height:5px;"></div>
+                        <button class="btn-toggle" onclick="adjustFont(-1)">Decrease (-)</button>
+                    </div>
+                </div>
+
+                <footer class="sidebar-footer">
+                    <a href="https://www.youtube.com/@DMRSurvival" target="_blank">YouTube</a> | 
+                    <a href="https://www.facebook.com/dmrsurvival" target="_blank">FaceBook</a> | 
+                    <a href="https://github.com/DMRSurvival" target="_blank">GitHub</a><br />
+                    
+                    <div style="margin: 5px 0;">
+                        <a href="#" onclick="openPage('Contact', 'pages/contact.html'); return false;">Contact</a> | 
+                        <a href="#" onclick="openPage('About', 'pages/about_dmr.html'); return false;">About</a> | 
+                        <a href="#" onclick="openPage('Legal', 'pages/legal.html'); return false;">Legal</a>
+                    </div>
+                    
+                    <p>Copyright 2026 Dark Mountain Research</p>
+                </footer>
+
+            </aside>
+            
+            <div id="overlay" onclick="toggleSidebar()"></div>
+
+            <main id="main-content">
+                <div class="empty-state" id="bg-logo">
+                     <img src="images/dmr_logo.png" alt="DMR Logo">
+                </div>
+                <div id="page-content"></div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // --- SITE SEARCH INDEX ---
+        // IMPORTANT: Add all your new pages here so the search bar can find them!
+        const siteIndex = [
+            { title: "Home", url: "pages/home.html", keywords: "home landing welcome main" },
+            { title: "Mission Statement", url: "pages/mission.html", keywords: "about mission goal archive" },
+            { title: "Contact", url: "pages/contact.html", keywords: "email phone reach contact" },
+            { title: "Log 001", url: "pages/log001.html", keywords: "research first entry" },
+            { title: "Log 002", url: "pages/log002.html", keywords: "meshtastic lora wireless mesh aredn batman" }
+        ];
+
+        let tabs = [];
+        let activeTabId = null;
+        let fontSize = 16;
+
+        const tabsContainer = document.getElementById('tabs-container');
+        const pageContent = document.getElementById('page-content');
+        const bgLogo = document.getElementById('bg-logo');
+        const tocList = document.getElementById('toc-list');
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const storedTabs = localStorage.getItem('dmr_tabs');
+            const storedActive = localStorage.getItem('dmr_active_id');
+            const storedTheme = localStorage.getItem('dmr_theme');
+            
+            if(storedTheme === 'light') document.body.classList.add('light-mode');
+
+            if (storedTabs) {
+                tabs = JSON.parse(storedTabs);
+                activeTabId = storedActive;
+                renderTabs();
+            } else {
+                openPage('Home', 'pages/home.html'); 
+            }
+
+            // Init Drag & Drop
+            new Sortable(tabsContainer, {
+                animation: 150,
+                onEnd: function (evt) {
+                    const movedItem = tabs.splice(evt.oldIndex, 1)[0];
+                    tabs.splice(evt.newIndex, 0, movedItem);
+                    saveState();
+                }
+            });
+        });
+
+        // --- Core Functions ---
+        
+        async function openPage(title, url) {
+            const id = Date.now().toString();
+            let content = '';
+
+            if (url) {
+                try {
+                    const response = await fetch(url);
+                    if (response.ok) {
+                        content = await response.text();
+                    } else {
+                        content = `<h1>Error 404</h1><p>File not found: ${url}</p>`;
+                    }
+                } catch (error) {
+                    console.error(error);
+                    content = `<h1>Connection Error</h1><p>Could not load content. Ensure you are running this on a web server.</p>`;
+                }
+            } else {
+                // Should basically never happen now that (+) is gone, unless called manually
+                content = `<h1>New Tab</h1><p>Select a file from the navigation tree.</p>`;
+            }
+
+            tabs.push({ id, title, content, url });
+            activateTab(id);
+            if(window.innerWidth <= 768) toggleSidebar();
+        }
+
+        function closeTab(e, id) {
+            e.stopPropagation();
+            const index = tabs.findIndex(t => t.id === id);
+            tabs = tabs.filter(t => t.id !== id);
+            
+            if (activeTabId === id) {
+                if (tabs.length > 0) {
+                    const newIndex = index < tabs.length ? index : tabs.length - 1;
+                    activateTab(tabs[newIndex].id);
+                } else {
+                    activeTabId = null;
+                    renderTabs();
+                }
+            } else {
+                saveState();
+                renderTabs();
+            }
+        }
+
+        function activateTab(id) {
+            activeTabId = id;
+            saveState();
+            renderTabs();
+            generateToC();
+        }
+
+        function renderTabs() {
+            tabsContainer.innerHTML = '';
+            
+            if (tabs.length === 0) {
+                bgLogo.style.display = 'flex';
+                pageContent.innerHTML = '';
+                tocList.innerHTML = '<p style="font-size:0.8rem; color:var(--text-dim)">No page open.</p>';
+                return;
+            } else {
+                bgLogo.style.display = 'none';
+            }
+
+            tabs.forEach(tab => {
+                const isActive = tab.id === activeTabId;
+                const tabEl = document.createElement('div');
+                tabEl.className = `tab ${isActive ? 'active' : ''}`;
+                tabEl.onclick = () => activateTab(tab.id);
+                tabEl.innerHTML = `<span>${tab.title}</span><span class="close-btn" onclick="closeTab(event, '${tab.id}')">×</span>`;
+                tabsContainer.appendChild(tabEl);
+
+                if (isActive) {
+                    pageContent.innerHTML = tab.content;
+                }
+            });
+        }
+
+        // --- Panel Logic ---
+
+        function switchPanel(panelName) {
+            document.querySelectorAll('.sidebar-panel').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.icon-btn').forEach(b => b.classList.remove('active-tool'));
+            
+            if(panelName === 'nav') {
+                document.getElementById('panel-nav').classList.add('active');
+                document.querySelector('[title="Site Navigation"]').classList.add('active-tool');
+            } else if (panelName === 'toc') {
+                document.getElementById('panel-toc').classList.add('active');
+                document.querySelector('[title="Page Contents"]').classList.add('active-tool');
+                generateToC();
+            } else if (panelName === 'settings') {
+                document.getElementById('panel-settings').classList.add('active');
+                document.querySelector('[title="Settings & Search"]').classList.add('active-tool');
+            }
+        }
+
+        function generateToC() {
+            const headers = pageContent.querySelectorAll('h1, h2');
+            tocList.innerHTML = '';
+            if (headers.length === 0) {
+                tocList.innerHTML = '<div style="color:var(--text-dim); font-style:italic; padding:10px;">No headers found on this page.</div>';
+                return;
+            }
+            headers.forEach(header => {
+                const link = document.createElement('a');
+                link.textContent = header.textContent;
+                link.className = header.tagName === 'H1' ? 'toc-link toc-h1' : 'toc-link toc-h2';
+                link.onclick = () => header.scrollIntoView({behavior: 'smooth'});
+                tocList.appendChild(link);
+            });
+        }
+
+        // --- Search Logic ---
+        function performSearch() {
+            const query = document.getElementById('search-input').value.toLowerCase();
+            if (!query) return;
+
+            const results = siteIndex.filter(page => 
+                page.title.toLowerCase().includes(query) || 
+                page.keywords.toLowerCase().includes(query)
+            );
+
+            let resultsHTML = `<h1>Search Results: "${query}"</h1>`;
+            
+            if (results.length > 0) {
+                resultsHTML += `<p>Found ${results.length} matching page(s):</p>`;
+                results.forEach(res => {
+                    resultsHTML += `
+                        <div class="search-result">
+                            <a href="#" onclick="openPage('${res.title}', '${res.url}')">${res.title}</a>
+                            <div class="search-snippet">Found in: ${res.url}</div>
+                        </div>
+                    `;
+                });
+            } else {
+                resultsHTML += `<p>No matches found.</p>`;
+            }
+
+            // Manually inject a "Search Results" tab
+            const id = Date.now().toString();
+            tabs.push({ id, title: `Search: ${query}`, content: resultsHTML, url: null });
+            activateTab(id);
+            if(window.innerWidth <= 768) toggleSidebar();
+        }
+        
+        // Enter key in search box triggers search
+        document.getElementById('search-input').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') performSearch();
+        });
+
+
+        // --- Settings Logic ---
+        function toggleTheme() {
+            document.body.classList.toggle('light-mode');
+            localStorage.setItem('dmr_theme', document.body.classList.contains('light-mode') ? 'light' : 'dark');
+        }
+
+        function adjustFont(change) {
+            fontSize += change;
+            document.body.style.setProperty('--font-size-base', fontSize + 'px');
+        }
+
+        function saveState() {
+            localStorage.setItem('dmr_tabs', JSON.stringify(tabs));
+            localStorage.setItem('dmr_active_id', activeTabId);
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+            if (window.innerWidth > 768) {
+                sidebar.classList.toggle('closed');
+            } else {
+                sidebar.classList.toggle('open-mobile');
+                overlay.classList.toggle('active');
+            }
+        }
+    </script>
+</body>
+</html>
