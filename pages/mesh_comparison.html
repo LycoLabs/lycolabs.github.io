@@ -1,0 +1,117 @@
+    <h1>Review of Wireless Mesh Technologies</h1>
+
+    <section>
+        <h2>Meshtastic</h2>
+        <p>Meshtastic is an open-source, decentralized, off-grid mesh network designed to run on affordable, low-power devices. It primarily utilizes LoRa (Long Range) radio technology, a spread spectrum modulation technique that allows for long-range communication with minimal power consumption <span class="citation">[1], [2]</span>. The system is designed for scenarios where internet access is unavailable or unreliable, enabling users to send text messages and location data through a network of devices that relay messages for one another.</p>
+        <ul>
+            <li><strong>Platform & Connectivity:</strong> Meshtastic operates on low-power hardware (such as ESP32 or nRF52 based boards) and offers client applications for iOS, Android, and web browsers to manage the mesh and send messages <span class="citation">[1]</span>.</li>
+            <li><strong>Protocol:</strong> It uses a mesh protocol over LoRa, which supports ranges of up to 10 miles (16 km) in rural areas, though practical ranges vary by environment <span class="citation">[1], [3]</span>.</li>
+            <li><strong>Use Case:</strong> Ideally suited for outdoor activities (hiking, skiing), emergency situations, and hobbyist off-grid communications.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>MeshCore</h2>
+        <p>MeshCore is a multi-platform system focused on enabling secure, text-based communications using LoRa radio hardware. Like Meshtastic, it functions as an off-line and off-grid messaging platform that does not rely on the internet <span class="citation">[4]</span>.</p>
+        <ul>
+            <li><strong>Mission:</strong> Its stated mission is to create a reliable, secure, and decentralized mesh radio networking system accessible to anyone.</li>
+            <li><strong>Target Audience:</strong> It is tailored for emergency response, disaster recovery, tactical security (law enforcement and private security), and outdoor activities.</li>
+            <li><strong>Key Features:</strong> The system emphasizes security and efficiency, supporting both human communication and IoT sensor networks.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>AREDN (Amateur Radio Emergency Data Network)</h2>
+        <p>AREDN is a high-speed data network implementation that repurposes commercial wireless hardware (such as routers from Ubiquiti, Mikrotik, and TP-Link) for use in the Amateur Radio bands <span class="citation">[5]</span>. Unlike the low-bandwidth LoRa systems, AREDN is capable of supporting higher bandwidth applications typical of standard TCP/IP networks.</p>
+        <ul>
+            <li><strong>Routing Protocol:</strong> AREDN recently transitioned from the legacy OLSR (Optimized Link State Routing) protocol to <strong>Babel</strong>, a modern routing protocol. As of release 4.26.1.0, the firmware is "Babel only," addressing scalability issues that OLSR faced in large networks <span class="citation">[6], [7]</span>.</li>
+            <li><strong>Spectrum:</strong> It operates on amateur radio frequencies, including 2.4 GHz, 5 GHz, and increasingly 900 MHz via IEEE 802.11ah (Wi-Fi HaLow) hardware supported in newer builds <span class="citation">[8], [9]</span>.</li>
+            <li><strong>Architecture:</strong> It provides a tunnel backup/restore feature and runs on top of the OpenWrt operating system (specifically OpenWrt 24.10.5 in recent versions) <span class="citation">[8]</span>.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Open Mesh (B.A.T.M.A.N. Advanced)</h2>
+        <p>"Open Mesh" in this context refers to the <strong>Open Mesh</strong> project and community that develops the <strong>B.A.T.M.A.N.</strong> (Better Approach to Mobile Ad-hoc Networking) routing protocol <span class="citation">[10]</span>. Specifically, <strong>batman-adv</strong> is a Linux kernel module that operates at the Data Link Layer (Layer 2) rather than the Network Layer (Layer 3) <span class="citation">[11], [12]</span>.</p>
+        <ul>
+            <li><strong>Layer 2 Virtual Switch:</strong> Unlike AREDN’s Babel (Layer 3), batman-adv encapsulates and forwards raw Ethernet frames, emulating a giant virtual network switch across all participating nodes. This makes the mesh transparent to higher-level protocols; nodes appear to be link-local, allowing DHCP, IPv6, and non-IP protocols to function without special configuration <span class="citation">[13], [14]</span>.</li>
+            <li><strong>Decentralized Routing:</strong> The protocol decentralizes routing knowledge so no single node possesses the entire network map, which improves scalability and eliminates the need to propagate all topology changes to every node <span class="citation">[15]</span>.</li>
+            <li><strong>Implementations (OpenMANET):</strong> Projects like <strong>OpenMANET</strong> utilize batman-adv on Raspberry Pi hardware combined with Wi-Fi HaLow (802.11ah) radios to create long-range, self-forming mesh networks <span class="citation">[16], [17]</span>. These implementations leverage the "virtual switch" capability to bridge traffic over sub-GHz frequencies.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Reticulum</h2>
+        <p>Reticulum is a cryptography-based networking stack designed to build "unstoppable networks" that are resistant to surveillance, censorship, and control <span class="citation">[18]</span>. It is distinct because it is not a single network but a tool for building many interoperable, autonomous networks.</p>
+        <ul>
+            <li><strong>Transport Agnostic:</strong> Reticulum can operate over almost any medium, including LoRa, Packet Radio, Wi-Fi, Ethernet, and I2P. It is capable of functioning in conditions with very high latency and extremely low bandwidth <span class="citation">[18]</span>.</li>
+            <li><strong>Privacy and Security:</strong> It does not use source addresses; packets do not contain information about their origin. All communication is encrypted by default with ephemeral keys, offering forward secrecy <span class="citation">[19]</span>.</li>
+            <li><strong>Addressing:</strong> Addresses are "self-sovereign" and portable, meaning they can be moved physically to different locations in the network without losing reachability, and there is no central authority controlling address allocation <span class="citation">[19]</span>.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>System Comparison Table</h2>
+        <table style="width:100%">
+            <thead>
+                <tr>
+                    <th>Feature</th>
+                    <th>Meshtastic</th>
+                    <th>MeshCore</th>
+                    <th>AREDN</th>
+                    <th>Open Mesh (batman-adv)</th>
+                    <th>Reticulum</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Primary Medium</strong></td>
+                    <td>LoRa (900/868/433 MHz) <span class="citation">[1]</span></td>
+                    <td>LoRa <span class="citation">[4]</span></td>
+                    <td>WiFi / Microwave (2.4, 5 GHz, 900 MHz HaLow) <span class="citation">[5], [8]</span></td>
+                    <td>Ethernet / WiFi / HaLow (via kernel module) <span class="citation">[20]</span></td>
+                    <td>Agnostic (LoRa, WiFi, Packet Radio, Ethernet) <span class="citation">[18]</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Routing Layer</strong></td>
+                    <td>Application/Mesh Layer (LoRa based)</td>
+                    <td>Mesh Layer (LoRa based)</td>
+                    <td>Layer 3 (Network Layer) using <strong>Babel</strong> <span class="citation">[8], [7]</span></td>
+                    <td>Layer 2 (Data Link Layer) using <strong>batman-adv</strong> <span class="citation">[13]</span></td>
+                    <td>Full Stack (Cryptography-based) <span class="citation">[18]</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Primary Goal</strong></td>
+                    <td>Off-grid consumer messaging & GPS</td>
+                    <td>Secure tactical & emergency text comms</td>
+                    <td>High-speed data for Amateur Radio Emergency Service</td>
+                    <td>Transparent "Virtual Switch" mesh for Linux/OpenWrt <span class="citation">[21]</span></td>
+                    <td>Censorship-resistant, sovereign, private networking <span class="citation">[22]</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Addressing</strong></td>
+                    <td>Node ID / User ID</td>
+                    <td>Proprietary / ID based</td>
+                    <td>IP Addresses (IPv4)</td>
+                    <td>MAC Addresses (Layer 2) <span class="citation">[13]</span></td>
+                    <td>Self-sovereign cryptographic addresses (No source IP) <span class="citation">[19]</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Hardware</strong></td>
+                    <td>Low-power microcontrollers (ESP32, nRF52) <span class="citation">[1]</span></td>
+                    <td>LoRa Hardware <span class="citation">[4]</span></td>
+                    <td>Commercial Routers (Ubiquiti, Mikrotik) <span class="citation">[5]</span></td>
+                    <td>Linux-based devices (Raspberry Pi, OpenWrt routers) <span class="citation">[17]</span></td>
+                    <td>Runs on CPU/MCU (Microcontrollers to SBCs) <span class="citation">[18]</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Encryption</strong></td>
+                    <td>Supported (AES)</td>
+                    <td>Secure/Encrypted <span class="citation">[4]</span></td>
+                    <td>Varies (Amateur radio regulations often limit encryption)</td>
+                    <td>None native (Transport layer); relies on upper layers</td>
+                    <td><strong>Mandatory</strong> end-to-end encryption (MPE) <span class="citation">[19]</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
